@@ -57,3 +57,9 @@ form { text-align: left; }
     padding: 13px 50px 13px;
   }
 }
+
+@media (max-width: 768px){
+    .flex-container {flex-direction: column; width: 100%;}
+    .form-container { margin-left: 12px; }
+    #previewArea{ width: 90vw; margin-right: auto; margin-left: auto; }
+}

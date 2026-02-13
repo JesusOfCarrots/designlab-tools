@@ -40,4 +40,4 @@ def preview():
     return create_month_html(months, showHolidays)
 
 if __name__ == "__main__":
-    app.run(debug=True, host="0.0.0.0")
+    app.run(debug=True, port=5002, host="0.0.0.0")
