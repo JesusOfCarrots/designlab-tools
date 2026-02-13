@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/monthoverview.css">
+    <title>Monatsübersicht</title>
+</head>
+<body onload="updatePreview()">
+    <main class="container">
+        <div class="flex-container">
+
+            <div class="form-container">
+                <form id="monthForm" action="/create-monthly-doc" method="post">
+                    <label for="monate">Monate:</label> <br><br>
+                    {% for number, name in months %}
+                        <label>
+                            <input type="checkbox"
+                                name="months"
+                                value="{{ number }}"
+                                {% if number == current_month %} checked {% endif %}
+                                onclick="updatePreview()">
+                            {{ name }}
+                        </label>
+                        <br>
+                    {% endfor %}
+                        
+                    <br> <br>
+                    <label for="holidays">Feiertage anzeigen?:</label>
+                    <input type="checkbox" name="showHolidays" value="1" checked onclick="updatePreview()"> <br>
+
+                    <label title="Eine Liste an deutschen Feiertagen von calendar.google.com" for="holidayURl">iCal URL:</label>
+                    <input type="text" name="holidayURL" placeholder="https://calendar.google.com/calendar/ical/de.german%23holiday@group.v.calendar.google.com/public/basic.ics" value="">
+
+                    <button type="submit" class="form-btn">DOCX Generieren</button>
+                </form>
+            </div>
+    
+            <div id="previewArea">
+                <div id="previewContent"></div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        function updatePreview() {
+            const form = document.getElementById("monthForm");
+            const formData = new FormData();
+
+            // Append months
+            const month_checkboxes = form.querySelectorAll('input[name="months"]:checked');
+            month_checkboxes.forEach(cb => formData.append('months', cb.value));
+
+            // Append showHolidays if checked
+            const holidaysCheckbox = form.querySelector('input[name="showHolidays"]');
+            if (holidaysCheckbox.checked) {
+                formData.append('showHolidays', holidaysCheckbox.value);
+            }
+            const holidayURL = form.querySelector('input[name="holidayURL"]');
+            if(holidayURL.value != ""){
+                formData.append('holidayURL', holidayURL.value);
+            }
+
+            fetch("/preview", {
+                method: "POST",
+                body: formData
+            })
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById("previewContent").innerHTML = html;
+            });
+        }
+    </script>
+
+</body>
+</html>

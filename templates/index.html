@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <title>Mel-Tools</title>
+</head>
+<body>
+    <main class="container">
+        <h1>Mel's Toolbox</h1>
+
+        <div class="wrapper">
+            <ul>
+                <li><a href="/monthy-doc">Monatsübersichten generieren</a></li>
+                <li><a href="https://pics.mel-designlab.de">Sharepic Generator</a></li>
+            </ul>
+        </div>
+    </main>
+
+    <footer>
+        <img src="/static/img/signature.svg" alt="signature" class="signature">
+        <p>&copy; 2026 by Mel Dunin-Majewski. All rights reserved.</p>
+        <p><a href="">Impresum</a>     <a href="#">Datenschutzerklärung</a></p>
+        <p>Backgrounds <a href="https://coolors.co/">#madewith coolors.co</a></p>
+    </footer>
+
+    <script>
+        document.body.style.background = `url('/static/img/backgrounds/gradient${Math.ceil(Math.random() * 4)}.png') fixed`;
+        document.body.style.backgroundSize = "cover";
+    </script>
+</body>
+</html>
